@@ -46,3 +46,7 @@ https://juejin.cn/post/6844904195707895816
 https://juejin.cn/post/6844903657318645767
 前端性能优化 24 条建议（2020）
 https://juejin.cn/post/6892994632968306702
+```
+## 7. localStorage 和 sessionStorage区别
+ - localStorage永久存放在浏览器中，需要手动清除，可添加addeventlistener监听数据变化
+ - sessionStorage关闭tab或浏览器后失效
