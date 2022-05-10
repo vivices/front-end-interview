@@ -1,5 +1,5 @@
 /**
- * 
+ * 增加integor接口
  */
 const obj = {
   a: 1,
@@ -53,9 +53,9 @@ function People(name, age) {
   }
 }
 
-let stu = new People('lilei', 16)
+let stu2 = new People('lilei', 16)
 
-stu.sayHi()
+stu2.sayHi()
 
 /**
  * setTimeout 实现 setInterval
@@ -67,4 +67,34 @@ const interval = (fn, wait) => {
     timer = setTimeout(interv, wait)
   }
   timer = setTimeout(interv, wait)
+}
+
+/**
+ * 手写new
+ */
+const _new = (fn, ...args) => {
+  if (typeof fn !== 'function') {
+    throw new Error('请传入构造函数！')
+  }
+  const obj = Object.create(fn.prototype)
+  const res = fn.call(obj, ...args)
+  if (res && typeof res === 'object' || typeof res === 'function') return res
+  return obj
+}
+
+/**
+ * 手写instanseof
+ */
+const _instanceof = (left, right) => {
+  const proto = Reflect.getPrototypeOf(left)
+  const prototype = right.prototype
+  while(true) {
+    if (!proto) {
+      return false
+    }
+    if (proto === prototype) {
+      return true
+    }
+    proto = Reflect.getPrototypeOf(proto)
+  }
 }
