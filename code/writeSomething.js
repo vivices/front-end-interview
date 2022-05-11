@@ -98,3 +98,41 @@ const _instanceof = (left, right) => {
     proto = Reflect.getPrototypeOf(proto)
   }
 }
+
+/**
+ * 手写filter
+ */
+function _filter(arr, fn) {
+  const res = []
+  for(let i = 0; i < arr.length; i++) {
+    if (fn(arr[i])) {
+      res.push(arr[i])
+    }
+  }
+  return res
+}
+
+/**
+ * once函数（利用高阶函数实现
+ * pay再多次都只会执行一次
+ */
+function _once(fn) {
+  let done = false
+  return function() {
+    if (!done) {
+      done = true
+      fn.apply(this, arguments)
+    }
+  }
+}
+const pay = _once(money => {
+  console.log(money)
+})
+pay(6)
+pay(6)
+pay(6)
+pay(6)
+
+/**
+ * 手写memoize
+ */
