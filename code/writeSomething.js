@@ -78,7 +78,9 @@ const _new = (fn, ...args) => {
   }
   const obj = Object.create(fn.prototype)
   const res = fn.call(obj, ...args)
-  if (res && typeof res === 'object' || typeof res === 'function') return res
+  if (res && typeof res === 'object' || typeof res === 'function') {
+    return res
+  }
   return obj
 }
 
