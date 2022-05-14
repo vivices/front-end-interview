@@ -146,4 +146,87 @@ const memoize = (fn) => {
     return cache[key]
   }
 }
+/**
+ * 手写Promise
+ * MyPromise优于_Promise
+ */
+class _Promise {
+  constructor(executor) {
+    executor(this.resolve, this.reject)
+  }
 
+  status = 'pending'
+  value = undefined
+  reason = undefined
+
+  successCallback = undefined
+  failCallback = undefined
+
+  resolve = value => {
+    if (this.status !== 'pending') return
+    this.status = 'resolved'
+    this.value = value
+    this?.successCallback()
+  }
+
+  reject = reason => {
+    if (this.status !== 'pending') return
+    this.status = 'rejected'
+    this.reason = reason
+    this?.failCallback()
+  } 
+
+  then(successCallback, failCallback) {
+    if (this.status === 'resolved') {
+      successCallback(this.value)
+    } else if (this.status === 'rejected') {
+      failCallback(this.reason)
+    } else {
+      // 处理异步等待,需要存储成功和失败回调
+      this.successCallback = successCallback
+      this.failCallback = failCallback
+    }
+  }
+}
+// A+
+
+class MyPromise {
+  constructor(executor) {
+    this.status = 'pending'
+    this.value = undefined
+    this.reason = undefined
+
+    this.successCallback = undefined
+    this.failCallback = undefined
+
+    const resolve = value => {
+      if (this.status !== 'pending') return
+      this.status = 'resolved'
+      this.vaue = value
+      this?.successCallback
+    }
+    const reject = reason => {
+      if (this.status !== 'pending') return
+      this.status = 'rejected'
+      this.reason = reason
+      this?.failCallback
+    }
+    try {
+      executor(resolve, reject)
+    } catch (err) {
+      reject(err)
+    }
+  }
+
+  then(onFulfilled, onRejected) {
+    if (this.status === 'resoleved') {
+      onFulfilled(this.vaule)
+    } else if (this.status === 'rejected') {
+      onRejected(this.reason)
+    } else {
+      // 异步等待
+      this.successCallback = onFulfilled
+      this.failCallback = failCallback
+    }
+  }
+}
