@@ -138,3 +138,10 @@ pay(6)
 /**
  * 手写memoize
  */
+const _memoize = (fn) => {
+  const cache = {}
+  return () => {
+    const key = JSON.stringify(...arguments)
+    cache[key] = cache[key] || fn(...arguments)
+  }
+}
