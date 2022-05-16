@@ -189,44 +189,49 @@ class _Promise {
   }
 }
 // A+
-
 class MyPromise {
-  constructor(executor) {
+  constructor(fn) {
     this.status = 'pending'
     this.value = undefined
     this.reason = undefined
 
-    this.successCallback = undefined
-    this.failCallback = undefined
+    this.successCallback = []
+    this.failCallback = []
 
     const resolve = value => {
       if (this.status !== 'pending') return
       this.status = 'resolved'
-      this.vaue = value
-      this?.successCallback
+      this.value = value
+      this.successCallback.forEach = fn => fn(value)
     }
-    const reject = reason => {
+
+    const reject = reasson => {
       if (this.status !== 'pending') return
       this.status = 'rejected'
-      this.reason = reason
-      this?.failCallback
+      this.reason = reasson
+      this.failCallback.forEach = fn => fn(reasson)
     }
+
     try {
-      executor(resolve, reject)
+      fn(resolve, reject)
     } catch (err) {
       reject(err)
     }
   }
 
   then(onFulfilled, onRejected) {
-    if (this.status === 'resoleved') {
-      onFulfilled(this.vaule)
+    if (this.status === 'resolved') {
+      onFulfilled(this.value)
     } else if (this.status === 'rejected') {
       onRejected(this.reason)
     } else {
-      // 异步等待
-      this.successCallback = onFulfilled
-      this.failCallback = failCallback
+      // 异步
+      this.successCallback.push(() => {
+        onFulfilled(this.value)
+      })
+      this.failCallback.push(() => {
+        onRejected(this.reason)
+      })
     }
   }
 }
