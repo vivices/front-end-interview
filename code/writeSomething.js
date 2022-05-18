@@ -21,6 +21,30 @@ obj[Symbol.iterator] = () => {
   }
 }
 
+const obj2 = {
+  list: [1, 2, 3],
+  [Symbol.iterator]() {
+    let index = 0
+    return {
+      next: () => {
+        return {
+          value: this.list[index],
+          done: index++ >= this.list.length
+        }
+      }
+    }
+  }
+}
+// 生成器实现
+const obj3 = {
+  list: [1, 2, 3],
+  [Symbol.iterator]: function * () {
+    for(let item of this.list) {
+      yield item
+    }
+  }
+}
+
 for(let k of obj){
   console.log(k);
 }
