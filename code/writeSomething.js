@@ -139,7 +139,7 @@ function _filter(arr, fn) {
 }
 
 /**
- * once函数（利用高阶函数实现
+ * once函数
  * pay再多次都只会执行一次
  */
 function _once(fn) {
@@ -172,7 +172,6 @@ const memoize = (fn) => {
 }
 /**
  * 手写Promise
- * MyPromise优于_Promise
  */
 class _Promise {
   constructor(executor) {
@@ -302,4 +301,17 @@ const _throttleTimer = (fn, wait) => {
       }, wait)
     }
   }
+}
+
+/**
+ * 数组去重
+ */
+// ruduce
+const unique = (arr) => {
+  return arr.reduce((acc, cur) => {
+    if (!acc.includes(cur)) {
+      acc.push(cur)
+    }
+    return acc
+  })
 }
