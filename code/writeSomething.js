@@ -1,5 +1,5 @@
 /**
- * 增加integor接口
+ * 增加iterator接口
  */
 const obj = {
   a: 1,
