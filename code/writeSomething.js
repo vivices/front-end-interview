@@ -1,5 +1,5 @@
 /**
- * 增加integor接口
+ * 增加iterator接口
  */
 const obj = {
   a: 1,
@@ -256,6 +256,50 @@ class MyPromise {
       this.failCallback.push(() => {
         onRejected(this.reason)
       })
+    }
+  }
+}
+
+/**
+ * 防抖
+ */
+const _debounce = (fn, wait) => {
+  let timer = null
+  return () => {
+    if (timer) {
+      timer = null
+      clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+      fn.call(this, ...arguments)
+    }, wait)
+  }
+}
+
+/**
+ * 节流
+ */
+// 时间戳版本
+const _throttleDate = (fn, wait) => {
+  let preTime = Date.new()
+  return () => {
+    const now = Date.now()
+    if (now - preTime >= wait) {
+      preTime = Date.new()
+      fn.call(this, ...arguments)
+    }
+  }
+}
+// 定时器版本
+const _throttleTimer = (fn, wait) => {
+  let timer = null
+  return () => {
+    if (!timer) {
+      timer = setTimeout(() => {
+        fn.call(this, ...arguments)
+        clearTimeout(timer)
+        timer = null
+      }, wait)
     }
   }
 }
