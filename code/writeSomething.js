@@ -264,9 +264,8 @@ class MyPromise {
  */
 const _debounce = (fn, wait) => {
   let timer = null
-  return () => {
+  return function() {
     if (timer) {
-      timer = null
       clearTimeout(timer)
     }
     timer = setTimeout(() => {
@@ -280,11 +279,11 @@ const _debounce = (fn, wait) => {
  */
 // 时间戳版本
 const _throttleDate = (fn, wait) => {
-  let preTime = Date.new()
-  return () => {
+  let preTime = Date.now()
+  return function() {
     const now = Date.now()
     if (now - preTime >= wait) {
-      preTime = Date.new()
+      preTime = Date.now()
       fn.call(this, ...arguments)
     }
   }
@@ -292,7 +291,7 @@ const _throttleDate = (fn, wait) => {
 // 定时器版本
 const _throttleTimer = (fn, wait) => {
   let timer = null
-  return () => {
+  return function() {
     if (!timer) {
       timer = setTimeout(() => {
         fn.call(this, ...arguments)
