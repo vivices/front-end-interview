@@ -24,6 +24,28 @@
 <body>
   <div class="container">
     <div class="child"></div>
+    <button id="btn">click</button>
   </div>
+
+  <script>
+    (function() {
+      const _throttleDate = (fn, wait) => {
+        let preTime = Date.now()
+        return function() {
+          const now = Date.now()
+          if (now - preTime >= wait) {
+            preTime = Date.now()
+            fn.call(this, ...arguments)
+          }
+        }
+      }
+
+      function clickHandle() {
+        console.log(11)
+      }
+      const btn = document.querySelector('#btn')
+      btn.onclick = _throttleDate(clickHandle, 1300)
+    })()
+  </script>
 </body>
 </html>
