@@ -1,0 +1,5 @@
+class VueRouter {
+  static install() {
+    
+  }
+}
